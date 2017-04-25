@@ -19,8 +19,8 @@ public class FireLightScript : MonoBehaviour
 	void ChangeLightIntensity()
 	{
 
-		minIntensity -= 0.17f;
-		maxIntensity -= 0.17f;
+		minIntensity -= 0.14f;
+		maxIntensity -= 0.14f;
 
 	}
 

@@ -36,8 +36,13 @@ public class ParticlesScript : MonoBehaviour {
 	void SecondChangeParticlesIntensity(){
 		part.maxParticles -= particleIntensity;
 	}
+
 	// Update is called once per frame
 	void Update () {
+		if (part.maxParticles == 0) {
+			CancelInvoke ();
+			part.Stop ();
+		}
 		if (part.maxParticles <= 10) {
 			if (!under10) {
 				if(source)
