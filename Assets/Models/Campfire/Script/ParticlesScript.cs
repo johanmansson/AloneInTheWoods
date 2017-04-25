@@ -37,6 +37,11 @@ public class ParticlesScript : MonoBehaviour {
 		part.maxParticles -= particleIntensity;
 	}
 
+    public void AddMoreParticles() {
+        part.maxParticles += 20;
+        print("More particles added!");
+    }
+
 	// Update is called once per frame
 	void Update () {
 		if (part.maxParticles == 0) {
