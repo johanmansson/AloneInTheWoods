@@ -21,7 +21,7 @@ public class StickOnFireTrigger : MonoBehaviour {
         {
             print("Trigger on Fire!");
             Destroy(other.gameObject);
-            GameObject.Find("Flame Particles").GetComponent<ParticlesScript>().AddMoreParticles();
+            GameObject.Find("Flame Particles").GetComponent<ParticlesScript>().AddMoreParticles(20);
         }
         
 

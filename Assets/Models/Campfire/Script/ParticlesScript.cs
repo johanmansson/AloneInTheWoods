@@ -6,59 +6,74 @@ public class ParticlesScript : MonoBehaviour {
 	public static int maxParticles;
 	public ParticleSystem part;
 	public AudioSource source;
-	float timeIntensity = 0f;
-	int particleIntensity =2;
-	bool under10=false;
+	float timeIntensity = 1.0f;
+	int particleIntensity =1;
+
+    bool wolfSoundPlayed = false;
 
 	public int lifeTime=60;
 
-
-
+    public GameObject light;
+    
 	// Use this for initialization
 	void Start () {
-		int firstMethodTime = lifeTime - (32+2);
-		timeIntensity = firstMethodTime / 15;
-	
-	
-
-		maxParticles = 40;
-		part = GetComponent<ParticleSystem>();
+        part = GetComponent<ParticleSystem>();
 		var main = part.main;
-		main.duration = lifeTime;
+		main.duration += lifeTime;
+        main.maxParticles += lifeTime;
 	
-		InvokeRepeating("ChangeParticlesIntensity", 2.0f, timeIntensity);
+		InvokeRepeating("DecreaseParticles", 0.0f, timeIntensity);
 	}
 
-	void ChangeParticlesIntensity(){
-		part.maxParticles -= particleIntensity;
-	
-	}
-	void SecondChangeParticlesIntensity(){
-		part.maxParticles -= particleIntensity;
-	}
 
-    public void AddMoreParticles() {
-		part.startSize=10;
-        print("More particles added!");
+    void DecreaseParticles()
+    {
+        part.maxParticles -= particleIntensity;
+
+        if(part.maxParticles == 0)
+        {
+            CancelInvoke();
+            part.Stop();
+            light.SetActive(false);
+        }
+    }
+
+
+    
+
+
+    public void AddMoreParticles(int seconds) {
+        var main = part.main;
+        main.duration += seconds;
+        part.maxParticles += seconds;
+        wolfSoundPlayed = false;
+        GameObject.Find("Explosion").GetComponent<ExplosionScript>().Explode();
     }
 
 	// Update is called once per frame
 	void Update () {
-		if (part.maxParticles == 0) {
-			CancelInvoke ();
-			part.Stop ();
-		}
-		if (part.maxParticles <= 10) {
-			if (!under10) {
-				if(source)
-					source.Play ();
-				CancelInvoke ();
-				timeIntensity = 3.0f;
-				particleIntensity = 1;
-				under10 = true;
-				InvokeRepeating("SecondChangeParticlesIntensity", 2.0f, timeIntensity);
-			}
-		}
+		
+        
+
+        if(part.maxParticles <= 10)
+        {
+            //AddMoreParticles(20);
+            if(!wolfSoundPlayed)
+            {
+                if(source)
+                {
+                    source.Play();
+                }
+                wolfSoundPlayed = true;
+
+            }
+        }
+
+        
+
+
 	}
+
+   
 
 }
