@@ -38,7 +38,7 @@ public class ParticlesScript : MonoBehaviour {
 	}
 
     public void AddMoreParticles() {
-        part.maxParticles += 20;
+		part.startSize=10;
         print("More particles added!");
     }
 

@@ -16,12 +16,20 @@ public class StickOnFireTrigger : MonoBehaviour {
 
 
     void OnTriggerEnter(Collider other) {
-        print("Trigger on Fire!");
-        GameObject.Find("Flame Particles").GetComponent<ParticlesScript>().AddMoreParticles();
+
+        if(other.gameObject.name == "Wood")
+        {
+            print("Trigger on Fire!");
+            Destroy(other.gameObject);
+            GameObject.Find("Flame Particles").GetComponent<ParticlesScript>().AddMoreParticles();
+        }
+        
+
+
+       
+        
     }
-    void OnTriggerExit(Collider other) {
-        print("trigger exit");
-    }
+    
 
 
 }
