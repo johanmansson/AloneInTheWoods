@@ -7,6 +7,7 @@ public class moreGravity : MonoBehaviour {
 	public void FixedUpdate()
     {
         GetComponent<Rigidbody>().AddForce(Physics.gravity, ForceMode.Acceleration);
+        GetComponent<Rigidbody>().AddForce(Physics.gravity, ForceMode.Acceleration);
     }
 
 }
