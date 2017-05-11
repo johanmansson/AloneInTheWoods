@@ -9,7 +9,6 @@ public class ParticlesScript : MonoBehaviour {
 	float timeIntensity = 1.0f;
 	int particleIntensity =1;
 
-    bool wolfSoundPlayed = false;
     bool fireStarted = false;
 	public int lifeTime=60;
     public int duration = 300;
@@ -24,17 +23,31 @@ public class ParticlesScript : MonoBehaviour {
 		var main = part.main;
 		main.duration += duration;
         light.SetActive(false);
+        GameObject.Find("Flame Particles").GetComponent<ParticlesScript>().StartWolfSound();
         
 	}
+
+    public void StartWolfSound()
+    {
+        InvokeRepeating("WolfSounds", 25.0f, 30.0f);
+    }
     
+    void WolfSounds()
+    {
+        GameObject.Find("Audio Source").GetComponent<AudioSource>().Play();
+        print("Wolf sounds");
+    }
     
     
     public void startFire()
     {
         if (!fireStarted)
         {
+
+            InvokeRepeating("GrowFlames", 0.0f, 0.2f);
+           
             GameObject.Find("Flame Particles").GetComponent<AudioSource>().Play();
-            part.maxParticles += 60;
+            //part.maxParticles += 60;
 /*
             GameObject.Find("Heat Particles").GetComponent<ParticleSystem>().maxParticles += 60;
 
@@ -52,21 +65,31 @@ public class ParticlesScript : MonoBehaviour {
 
 
           
-            GameObject.Find("Explosion").GetComponent<ExplosionScript>().Explode();
+            //GameObject.Find("Explosion").GetComponent<ExplosionScript>().Explode();
 
-            InvokeRepeating("DecreaseParticles", 0.0f, timeIntensity);
+          
 
             fireStarted = true;
         }
 
      
     }
-    
+
+    void GrowFlames()
+    {
+        part.maxParticles += 1;
+        if (part.maxParticles >= 60)
+        {
+            CancelInvoke();
+            InvokeRepeating("DecreaseParticles", 0.0f, timeIntensity);
+        }
+    }
+
 
 
     void DecreaseParticles()
     {
-        print(part.name + ": " + part.maxParticles);
+       
         part.maxParticles -= particleIntensity;
 
         if(part.maxParticles == 0)
@@ -110,31 +133,13 @@ public class ParticlesScript : MonoBehaviour {
         var main = part.main;
         //main.duration += 20;
         Invoke("Explode", 0.0f);
-        wolfSoundPlayed = false;
+        
         
     }
 
 	// Update is called once per frame
 	void Update () {
 		
-        
-
-        if(part.maxParticles <= 10)
-        {
-            //AddMoreParticles(20);
-            if(!wolfSoundPlayed)
-            {
-                if(source)
-                {
-                    source.Play();
-                }
-                wolfSoundPlayed = true;
-
-            }
-        }
-
-        
-
 
 	}
 

@@ -34,7 +34,7 @@ public class FireSteelSparks : MonoBehaviour
             GameObject.Find("Flame Particles2").GetComponent<ParticlesScript>().startFire();
             GameObject.Find("Heat Particles").GetComponent<ParticlesScript>().startFire();
             GameObject.Find("Spark Particles").GetComponent<ParticlesScript>().startFire();
-            GameObject.Find("Campfire").GetComponent<FireLightScript>().Explode();
+            GameObject.Find("Campfire").GetComponent<FireLightScript>().startLight();
         }
 
 
