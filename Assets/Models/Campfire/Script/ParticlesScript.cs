@@ -34,7 +34,7 @@ public class ParticlesScript : MonoBehaviour {
     
     void WolfSounds()
     {
-        GameObject.Find("Audio Source").GetComponent<AudioSource>().Play();
+        source.Play();
         print("Wolf sounds");
     }
     

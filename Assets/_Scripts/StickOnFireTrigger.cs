@@ -17,7 +17,7 @@ public class StickOnFireTrigger : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
 
-        if(other.gameObject.name == "Wood")
+        if(other.gameObject.tag == "fuel")
         {
             print("Trigger on Fire!");
             Destroy(other.gameObject);

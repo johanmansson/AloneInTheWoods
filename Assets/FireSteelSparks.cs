@@ -20,7 +20,11 @@ public class FireSteelSparks : MonoBehaviour
         
         if (other.gameObject.name == "Knife")
         {
+            //SteamVR_Controller.Input(1).TriggerHapticPulse((ushort)Mathf.Lerp(0, 3999, 1));
+            //SteamVR_Controller.Input(2).TriggerHapticPulse((ushort)Mathf.Lerp(0, 3999, 1));
+
             print("Sparks!!!!!");
+
             GameObject.Find("RightHandExplosion").GetComponent<ExplosionScript>().Explode();
             GameObject.Find("Fire steel").GetComponent<AudioSource>().Play();
             sparks = true;
@@ -29,6 +33,7 @@ public class FireSteelSparks : MonoBehaviour
 
         if (other.gameObject.name == "Trigger2" && sparks)
         {
+           
             print("Start Fire!");
             GameObject.Find("Flame Particles").GetComponent<ParticlesScript>().startFire();
             GameObject.Find("Flame Particles2").GetComponent<ParticlesScript>().startFire();
