@@ -11,9 +11,13 @@ public class ParticlesScript : MonoBehaviour {
 
     bool fireStarted = false;
 	public int lifeTime=60;
-    public int duration = 300;
+    public int duration = 1000;
+    public AudioSource angryWolfSound;
+    public AudioSource wolfPrasseling;
+    public AudioSource backgroundWolfs;
 
     public GameObject light;
+    public GameObject Zombie;
     
 
     
@@ -24,8 +28,40 @@ public class ParticlesScript : MonoBehaviour {
 		main.duration += duration;
         light.SetActive(false);
         GameObject.Find("Flame Particles").GetComponent<ParticlesScript>().StartWolfSound();
-        
+      
+        InvokeRepeating("ShowZombie", 60.0f, 60.0f);
+       // InvokeRepeating("BackgroundWolfs", 20.0f, 20.0f);
 	}
+
+    void BackgroundWolfs()
+    {
+        if (backgroundWolfs)
+        {
+            backgroundWolfs.Play();
+        }
+    }
+
+    void ShowZombie()
+    {
+        print("Zombie should show");
+        if (Zombie)
+        {
+            Zombie.SetActive(true);
+
+        }
+       
+        Invoke("HideZombie", 0.5f);
+    }
+
+    void HideZombie()
+    {
+        print("Zombie should hide");
+        if (Zombie)
+        {
+            Zombie.SetActive(false);
+        }
+       
+    }
 
     public void StartWolfSound()
     {
@@ -34,8 +70,12 @@ public class ParticlesScript : MonoBehaviour {
     
     void WolfSounds()
     {
-        source.Play();
-        print("Wolf sounds");
+        if (backgroundWolfs)
+        {
+            backgroundWolfs.Play();
+            print("Wolf sounds");
+        }
+        
     }
     
     
@@ -91,8 +131,28 @@ public class ParticlesScript : MonoBehaviour {
     {
        
         part.maxParticles -= particleIntensity;
-
-        if(part.maxParticles == 0)
+        if (part.maxParticles == 20)
+        {
+            if (wolfPrasseling)
+            {
+                wolfPrasseling.Play();
+            }
+        }
+        if (part.maxParticles == 10)
+        {
+            if (angryWolfSound)
+            {
+                angryWolfSound.Play();
+            }
+        }
+        if (part.maxParticles == 5)
+        {
+            if (angryWolfSound)
+            {
+                angryWolfSound.Play();
+            }
+        }
+        if (part.maxParticles == 0)
         {
             CancelInvoke();
             part.Stop();

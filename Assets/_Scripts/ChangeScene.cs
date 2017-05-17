@@ -71,7 +71,7 @@ public class ChangeScene : MonoBehaviour {
 
      IEnumerator sceneChange() {
         iTween.FadeTo(fader, 1f, 5f);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(5);
         scene.allowSceneActivation = true;
     }
 
