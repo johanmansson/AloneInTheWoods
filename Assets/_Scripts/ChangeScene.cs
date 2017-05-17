@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using Valve.VR;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +15,8 @@ public class ChangeScene : MonoBehaviour {
     private SteamVR_TrackedObject trackedObj;
 
     private AsyncOperation scene;
+
+    public GameObject fader;
 
 
 
@@ -60,9 +64,15 @@ public class ChangeScene : MonoBehaviour {
         if(controller.GetPressUp(gripButton))
         {
             print("ungripped!");
-            scene.allowSceneActivation = true;
+            StartCoroutine(sceneChange());
         }
 
+    }
+
+     IEnumerator sceneChange() {
+        iTween.FadeTo(fader, 1f, 5f);
+        yield return new WaitForSeconds(2);
+        scene.allowSceneActivation = true;
     }
 
 
