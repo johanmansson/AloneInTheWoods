@@ -17,7 +17,7 @@ public class StickOnFireTrigger : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
 
-        if(other.gameObject.tag == "fuel")
+        if(other.gameObject.tag == "fuel" && GameObject.Find("Flame Particles").GetComponent<ParticlesScript>().FireIsStarted())
         {
             print("Trigger on Fire!");
             Destroy(other.gameObject);

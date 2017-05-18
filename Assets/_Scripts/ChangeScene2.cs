@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
-using UnityEngine.SceneManagement;
 
-
-
-public class ChangeScene : MonoBehaviour {
+public class ChangeScene2 : MonoBehaviour {
 
     private Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_Grip;
     private Valve.VR.EVRButtonId triggerButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
@@ -14,7 +11,7 @@ public class ChangeScene : MonoBehaviour {
     private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
     private SteamVR_TrackedObject trackedObj;
 
-    private AsyncOperation scene;
+    
 
     public GameObject fader;
 
@@ -25,11 +22,10 @@ public class ChangeScene : MonoBehaviour {
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
 
-       // OpenVR.System.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
-        OpenVR.System.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
+        OpenVR.System.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
+        //OpenVR.System.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
 
-        scene = SceneManager.LoadSceneAsync("First", LoadSceneMode.Single);
-        scene.allowSceneActivation = false;
+        
 
     }
 
@@ -46,43 +42,29 @@ public class ChangeScene : MonoBehaviour {
         if (controller.GetPressDown(triggerButton))
         {
             Debug.Log("Trigger Down");
-            
+
         }
 
         if (controller.GetPressUp(triggerButton))
         {
             Debug.Log("Trigger up");
-            
+
         }
 
 
-        if(controller.GetPressDown(gripButton))
+        if (controller.GetPressDown(gripButton))
         {
             print("gripped!");
         }
 
-        if(controller.GetPressUp(gripButton))
+        if (controller.GetPressUp(gripButton))
         {
             print("ungripped!");
-            startSceneChange();
+            //StartCoroutine(sceneChange());
+            GameObject.Find("Controller (left)").GetComponent<ChangeScene>().startSceneChange();
         }
 
     }
 
-    public void startSceneChange()
-    {
-        StartCoroutine(sceneChange());
-    }
-
-     IEnumerator sceneChange() {
-        iTween.FadeTo(fader, 1f, 5f);
-        yield return new WaitForSeconds(5);
-        scene.allowSceneActivation = true;
-    }
-
-
-
-
-
-
+    
 }

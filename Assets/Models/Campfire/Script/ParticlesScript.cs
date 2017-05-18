@@ -18,20 +18,57 @@ public class ParticlesScript : MonoBehaviour {
 
     public GameObject light;
     public GameObject Zombie;
-    
 
     
-	// Use this for initialization
-	void Start () {
+
+
+
+    // Use this for initialization
+    void Start () {
         part = GetComponent<ParticleSystem>();
 		var main = part.main;
 		main.duration += duration;
         light.SetActive(false);
         GameObject.Find("Flame Particles").GetComponent<ParticlesScript>().StartWolfSound();
-      
-        InvokeRepeating("ShowZombie", 60.0f, 60.0f);
-       // InvokeRepeating("BackgroundWolfs", 20.0f, 20.0f);
+        StartCoroutine(fireIsNotStarted());
+
+        //InvokeRepeating("ShowZombie", 60.0f, 60.0f);
+        InvokeRepeating("BackgroundWolfs", 20.0f, 20.0f);
 	}
+
+    public bool FireIsStarted()
+    {
+        return fireStarted;
+    }
+
+
+    IEnumerator fireIsNotStarted()
+    {
+        yield return new WaitForSeconds(25);
+        if(!fireStarted)
+        {
+            if (wolfPrasseling)
+            {
+                wolfPrasseling.Play();
+            }
+        }
+        yield return new WaitForSeconds(5);
+        if (!fireStarted)
+        {
+            if (angryWolfSound)
+            {
+                angryWolfSound.Play();
+            }
+        }
+        yield return new WaitForSeconds(2);
+        if (!fireStarted)
+        {
+            GameObject.Find("SceneController").GetComponent<ChangeBackScene>().FireWasKilled();
+        }
+
+
+
+    }
 
     void BackgroundWolfs()
     {
@@ -138,14 +175,14 @@ public class ParticlesScript : MonoBehaviour {
                 wolfPrasseling.Play();
             }
         }
-        if (part.maxParticles == 10)
+        if (part.maxParticles == 6)
         {
             if (angryWolfSound)
             {
                 angryWolfSound.Play();
             }
         }
-        if (part.maxParticles == 5)
+        if (part.maxParticles == 1)
         {
             if (angryWolfSound)
             {
@@ -157,9 +194,13 @@ public class ParticlesScript : MonoBehaviour {
             CancelInvoke();
             part.Stop();
             light.SetActive(false);
+
+            GameObject.Find("SceneController").GetComponent<ChangeBackScene>().FireWasKilled();
+            
         }
     }
 
+  
     void Explode()
     {
 
