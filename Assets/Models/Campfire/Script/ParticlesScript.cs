@@ -33,7 +33,7 @@ public class ParticlesScript : MonoBehaviour {
         StartCoroutine(fireIsNotStarted());
 
         //InvokeRepeating("ShowZombie", 60.0f, 60.0f);
-        InvokeRepeating("BackgroundWolfs", 20.0f, 20.0f);
+        //InvokeRepeating("BackgroundWolfs", 20.0f, 20.0f);
 	}
 
     public bool FireIsStarted()
@@ -189,7 +189,7 @@ public class ParticlesScript : MonoBehaviour {
                 angryWolfSound.Play();
             }
         }
-        if (part.maxParticles == 0)
+        if (part.maxParticles == 0 && !GameObject.Find("SceneController").GetComponent<ChangeBackScene>().hasSurvived())
         {
             CancelInvoke();
             part.Stop();
