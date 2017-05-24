@@ -48,7 +48,7 @@ public class ChangeBackScene : MonoBehaviour {
         while(!survived) {
 
             GameObject.Find("Backgrounfd Wolf Sound").GetComponent<AudioSource>().Play();
-            float timeIntervall = Random.Range(15f, 30f);
+            float timeIntervall = Random.Range(30f, 50f);
             yield return new WaitForSeconds(timeIntervall);
 
         }
